@@ -30,6 +30,7 @@ const SignUpForm = () => {
       let country = 'pakistan'
       const { user } = await createAuthUserWithEmailAndPassword(email, password)
       await createUserDocumentFromAuth(user, { displayName, country })
+      alert('Account Created Sucessfully')
       resetFormFields()
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {

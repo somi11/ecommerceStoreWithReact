@@ -5,6 +5,7 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 const firebaseConfig = {
@@ -31,7 +32,10 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 export const db = getFirestore()
 
-export const createUserDocumentFromAuth = async (userAuth, addionalInformation = {}) => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  addionalInformation = {},
+) => {
   if (!userAuth) return
   const userDocRef = doc(db, 'users', userAuth.uid)
   const userSnapshot = await getDoc(userDocRef)
@@ -56,4 +60,9 @@ export const createUserDocumentFromAuth = async (userAuth, addionalInformation =
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return
   return await createUserWithEmailAndPassword(auth, email, password)
+}
+
+export const loginUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return
+  return await signInWithEmailAndPassword(auth, email, password)
 }
